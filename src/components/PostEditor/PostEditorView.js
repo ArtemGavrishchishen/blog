@@ -72,6 +72,7 @@ const PostEditorView = ({
         required
         value={title}
         onChange={change}
+        autofocus="true"
       />
       <Input
         name="creator"

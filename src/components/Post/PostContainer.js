@@ -49,10 +49,12 @@ class PostContainer extends Component {
       match: { params },
     } = this.props;
 
-    const { comment } = this.state;
+    const { comment, comments } = this.state;
 
     if (params.id) {
-      API.addCommentPostById(params.id, comment);
+      API.addCommentPostById(params.id, comment).then(data =>
+        this.setState({ comments: [...comments, data] }),
+      );
     }
 
     this.fetchPostById();
@@ -74,7 +76,7 @@ class PostContainer extends Component {
   };
 
   render() {
-    const { comments, ...postInfo } = this.state;
+    const { comments, comment, ...postInfo } = this.state;
     const { modalIsOpen, closeModal, openModal } = this.props;
     return (
       <div>
@@ -83,7 +85,7 @@ class PostContainer extends Component {
 
         <CommentsView
           comments={comments}
-          {...this.state}
+          text={comment}
           submit={this.handleSubmitForm}
           change={this.handleChange}
         />

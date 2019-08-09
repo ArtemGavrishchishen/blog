@@ -8,7 +8,11 @@ export const getPostById = async id => {
 };
 
 export const addCommentPostById = async (id, comment) => {
-  const newComment = { postId: id, body: comment, date: new Date() };
+  const newComment = {
+    postId: id,
+    body: comment,
+    date: new Date(),
+  };
   const response = await axios.post(`/comments`, newComment);
   return response.data;
 };
