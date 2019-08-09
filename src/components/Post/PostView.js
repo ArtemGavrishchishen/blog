@@ -1,26 +1,30 @@
 import React from 'react';
+import styled from 'styled-components';
+import Button from '../Button/Button';
+
+const Wrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 30px;
+`;
 
 const PostView = ({
   title = '',
   body = '',
-  comments = [],
   creator = '',
   date = '',
   goBack,
 }) => (
   <div>
-    <button onClick={goBack} type="button">
-      goBack
-    </button>
+    <Wrapper>
+      <Button onClick={goBack}>Go Back</Button>
+    </Wrapper>
     <div>{title}</div>
     <div>{body}</div>
     <div>{creator}</div>
     <div>{date}</div>
-    <ul>
-      {comments.map(comment => (
-        <li key={comment.id}>{comment.body}</li>
-      ))}
-    </ul>
   </div>
 );
 

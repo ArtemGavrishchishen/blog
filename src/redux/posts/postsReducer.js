@@ -12,7 +12,7 @@ function postsReducer(state = INIT_POSTS, { type, payload }) {
       return INIT_POSTS;
 
     case types.ADD_SUCCESS:
-      return [...state, payload];
+      return [payload, ...state];
 
     case types.DELETE_SUCCESS:
       return state.filter(post => post.id !== payload);

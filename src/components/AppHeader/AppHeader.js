@@ -10,6 +10,7 @@ const Title = styled.h1`
 const Wrapper = styled.section`
   padding: 0.5em;
   background: #1976d2;
+  margin-bottom: 30px;
 `;
 
 const AppHeader = () => (
