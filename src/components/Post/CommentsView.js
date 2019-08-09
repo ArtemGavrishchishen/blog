@@ -71,7 +71,7 @@ const CommentsView = ({ comments = [], text = '', submit, change }) => (
         placeholder="Write your comment"
         value={text}
         onChange={change}
-        autofocus="true"
+        autoFocus
       />
       <Btn type="submit">Post Comment </Btn>
     </Form>
