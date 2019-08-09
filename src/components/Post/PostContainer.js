@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import getPostById from '../../services/api';
+import * as API from '../../services/api';
 import { modalSelectors, modalActions } from '../../redux/modal';
 
 import PostView from './PostView';
@@ -17,30 +17,25 @@ const INIT_POST = {
   comments: [],
   creator: '',
   date: '',
+  comment: '',
 };
 
 class PostContainer extends Component {
   state = { ...INIT_POST };
 
   componentDidMount() {
+    this.fetchPostById();
+  }
+
+  fetchPostById = () => {
     const {
       match: { params },
     } = this.props;
 
     if (params.id) {
-      getPostById(params.id).then(data => this.setState({ ...data }));
+      API.getPostById(params.id).then(data => this.setState({ ...data }));
     }
-  }
-
-  componentDidUpdate() {
-    const {
-      match: { params },
-    } = this.props;
-
-    if (params.id) {
-      getPostById(params.id).then(data => this.setState({ ...data }));
-    }
-  }
+  };
 
   handleChange = e => {
     const { name, value } = e.target;
@@ -49,8 +44,18 @@ class PostContainer extends Component {
 
   handleSubmitForm = e => {
     e.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log('Comment added');
+
+    const {
+      match: { params },
+    } = this.props;
+
+    const { comment } = this.state;
+
+    if (params.id) {
+      API.addCommentPostById(params.id, comment);
+    }
+
+    this.fetchPostById();
   };
 
   handleGoBack = () => {
@@ -84,7 +89,10 @@ class PostContainer extends Component {
         />
         {modalIsOpen && (
           <Modal onClose={closeModal}>
-            <PostEditorContainer onClose={closeModal} />
+            <PostEditorContainer
+              onClose={closeModal}
+              fetch={this.fetchPostById}
+            />
           </Modal>
         )}
       </div>

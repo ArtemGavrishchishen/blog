@@ -36,7 +36,10 @@ class PostsListContainer extends Component {
 
         {modalIsOpen && (
           <Modal onClose={closeModal}>
-            <PostEditorContainer onClose={closeModal} />
+            <PostEditorContainer
+              onClose={closeModal}
+              fetch={this.fetchPostById}
+            />
           </Modal>
         )}
         <PostsListView posts={posts} />

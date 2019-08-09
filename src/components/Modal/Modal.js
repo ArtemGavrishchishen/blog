@@ -67,21 +67,19 @@ const Modal = props => {
   const { onClose, children } = props;
   const backdropRef = useRef(null);
 
-  const keyDownHandler = e => {
-    if (e.code !== 'Escape') {
-      return;
-    }
-
-    onClose();
-  };
-
   useEffect(() => {
+    const keyDownHandler = e => {
+      if (e.code !== 'Escape') {
+        return;
+      }
+      onClose();
+    };
     window.addEventListener('keydown', keyDownHandler);
 
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, []);
+  }, [onClose]);
 
   return (
     <Backdrop ref={backdropRef}>

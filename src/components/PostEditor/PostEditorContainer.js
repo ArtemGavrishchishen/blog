@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import getPostById from '../../services/api';
+import * as API from '../../services/api';
 import { postsOperations } from '../../redux/posts';
 
 import PostEditorView from './PostEditorView';
@@ -25,7 +25,7 @@ class PostEditorContainer extends Component {
     } = this.props;
 
     if (params.id) {
-      getPostById(params.id).then(data => this.setState({ ...data }));
+      API.getPostById(params.id).then(data => this.setState({ ...data }));
     }
   }
 
@@ -36,14 +36,19 @@ class PostEditorContainer extends Component {
 
   handleSubmitForm = e => {
     e.preventDefault();
+
     const { id } = this.state;
-    const { addPost, updatePost } = this.props;
+
+    const { addPost, updatePost, fetch } = this.props;
 
     if (id) {
       updatePost(this.state);
+
+      fetch();
     } else {
       addPost(this.state);
     }
+
     this.reset();
   };
 
